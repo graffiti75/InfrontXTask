@@ -1,11 +1,14 @@
 package br.android.cericatto.infrontxtask
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import br.android.cericatto.infrontxtask.adapter.ResultsAdapter
+import br.android.cericatto.infrontxtask.data.result.ResultItem
 import br.android.cericatto.infrontxtask.databinding.ActivityMainBinding
 import br.android.cericatto.infrontxtask.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,22 +26,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnData.setOnClickListener {
-            viewModel.getData()
-        }
+        viewModel.getData()
 
         lifecycleScope.launchWhenStarted {
             viewModel.data.collect { event ->
                 when(event) {
                     is MainViewModel.UIEvent.Success -> {
                         binding.progressBar.isVisible = false
-                        binding.tvResult.setTextColor(Color.WHITE)
-                        binding.tvResult.text = event.resultText
+                        setAdapter(event.results)
+
                     }
                     is MainViewModel.UIEvent.Failure -> {
                         binding.progressBar.isVisible = false
-                        binding.tvResult.setTextColor(Color.RED)
-                        binding.tvResult.text = event.errorText
                     }
                     is MainViewModel.UIEvent.Loading -> {
                         binding.progressBar.isVisible = true
@@ -47,5 +46,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun setAdapter(results: List<ResultItem>) {
+        val resultsAdapter = ResultsAdapter()
+        binding.recyclerView.apply {
+            adapter = resultsAdapter
+            val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+            dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this.context, R.drawable.decoration_divider)!!)
+            addItemDecoration(dividerItemDecoration)
+        }
+        resultsAdapter.submitList(results)
     }
 }
