@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.android.cericatto.infrontxtask.R
 import br.android.cericatto.infrontxtask.data.result.ResultItem
 import br.android.cericatto.infrontxtask.databinding.ItemResultBinding
+import br.android.cericatto.infrontxtask.util.formatDate
 
 class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCallback()) {
 
@@ -23,10 +24,9 @@ class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCal
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.tvCompetitionName.text = item.competitionStage.competition.name
-        holder.binding.tvVenueName.text = item.venue.name
-        // Input: 2019-02-02T15:00:00.000Z
-        // Output: Feb 2, 2019 at 15:00
-        val date = ""
+        holder.binding.tvVenueName.text = "${item.venue.name} | ${item.date.formatDate()}"
+
+
         setHomeAwayTeams(holder, item)
     }
 
@@ -43,14 +43,12 @@ class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCal
             holder.binding.tvHomeTeamName.setTypeface(null, Typeface.BOLD)
 
             holder.binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_700))
-            holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.black))
         } else if (awayScore > homeScore) {
             holder.binding.tvHomeTeamName.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
             holder.binding.tvAwayTeamName.setTextSize(TypedValue.COMPLEX_UNIT_SP,22f)
             holder.binding.tvAwayTeamName.setTypeface(null, Typeface.BOLD)
 
             holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_700))
-            holder.binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.black))
         }
     }
 }
