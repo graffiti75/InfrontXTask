@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 when(event) {
                     is MainViewModel.UIEvent.Success -> {
                         binding.progressBar.isVisible = false
-                        setAdapter(event.results)
+                        setAdapter(event.items)
 
                     }
                     is MainViewModel.UIEvent.Failure -> {
@@ -48,14 +48,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setAdapter(results: List<ResultItem>) {
-        val resultsAdapter = ResultsAdapter()
+//    private fun setAdapter(items: List<FixtureItem>) {
+    private fun setAdapter(items: List<ResultItem>) {
+//        val itemAdapter = FixturesAdapter()
+        val itemAdapter = ResultsAdapter()
         binding.recyclerView.apply {
-            adapter = resultsAdapter
+            adapter = itemAdapter
             val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this.context, R.drawable.decoration_divider)!!)
             addItemDecoration(dividerItemDecoration)
         }
-        resultsAdapter.submitList(results)
+        itemAdapter.submitList(items)
     }
 }

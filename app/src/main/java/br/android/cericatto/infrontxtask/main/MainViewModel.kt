@@ -2,6 +2,7 @@ package br.android.cericatto.infrontxtask.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.android.cericatto.infrontxtask.data.fixture.FixtureItem
 import br.android.cericatto.infrontxtask.data.result.ResultItem
 import br.android.cericatto.infrontxtask.util.DispatcherProvider
 import br.android.cericatto.infrontxtask.util.Resource
@@ -22,7 +23,8 @@ class MainViewModel @Inject constructor(
 ): ViewModel() {
 
     sealed class UIEvent {
-        class Success(val results: List<ResultItem>): UIEvent()
+        class Success(val items: List<ResultItem>): UIEvent()
+//        class Success(val items: List<FixtureItem>): UIEvent()
         class Failure(val errorText: String): UIEvent()
         object Loading : UIEvent()
         object Empty : UIEvent()
@@ -35,14 +37,15 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch(dispatchers.io) {
             _data.value = UIEvent.Loading
             when(val apiResponse = repository.getResults()) {
+//            when(val apiResponse = repository.getFixtures()) {
                 is Resource.Error ->
                     _data.value = UIEvent.Failure(apiResponse.message!!)
                 is Resource.Success -> {
-                    val result = apiResponse.data!!
-                    if (result == null) {
+                    val items = apiResponse.data
+                    if (items == null) {
                         _data.value = UIEvent.Failure("Unexpected error")
                     } else {
-                        _data.value = UIEvent.Success(result)
+                        _data.value = UIEvent.Success(items)
                     }
                 }
             }

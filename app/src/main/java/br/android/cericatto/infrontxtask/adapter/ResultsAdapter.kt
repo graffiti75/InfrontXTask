@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.android.cericatto.infrontxtask.R
 import br.android.cericatto.infrontxtask.data.result.ResultItem
 import br.android.cericatto.infrontxtask.databinding.ItemResultBinding
-import br.android.cericatto.infrontxtask.util.formatDate
+import br.android.cericatto.infrontxtask.util.formatDateToAdapter
 
 class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCallback()) {
 
@@ -24,8 +24,7 @@ class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCal
     override fun onBindViewHolder(holder: ResultsViewHolder, position: Int) {
         val item = getItem(position)
         holder.binding.tvCompetitionName.text = item.competitionStage.competition.name
-        holder.binding.tvVenueName.text = "${item.venue.name} | ${item.date.formatDate()}"
-
+        holder.binding.tvCompetitionName.setTypeface(null, Typeface.BOLD)
 
         setHomeAwayTeams(holder, item)
     }
@@ -50,6 +49,7 @@ class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCal
 
             holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_700))
         }
+        holder.binding.tvVenueName.text = "${item.venue.name} | ${item.date.formatDateToAdapter(context)}"
     }
 }
 
