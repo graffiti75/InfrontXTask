@@ -1,7 +1,6 @@
 package br.android.cericatto.infrontxtask.adapter
 
 import android.graphics.Typeface
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -36,19 +35,23 @@ class ResultsAdapter : ListAdapter<ResultItem, ResultsViewHolder>(ResultsDiffCal
 
         holder.binding.tvHomeTeamName.text = item.homeTeam.name
         holder.binding.tvAwayTeamName.text = item.awayTeam.name
-        if (homeScore > awayScore) {
-            holder.binding.tvHomeTeamName.setTextSize(TypedValue.COMPLEX_UNIT_SP,22f)
-            holder.binding.tvAwayTeamName.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
-            holder.binding.tvHomeTeamName.setTypeface(null, Typeface.BOLD)
-
-            holder.binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_700))
-        } else if (awayScore > homeScore) {
-            holder.binding.tvHomeTeamName.setTextSize(TypedValue.COMPLEX_UNIT_SP,20f)
-            holder.binding.tvAwayTeamName.setTextSize(TypedValue.COMPLEX_UNIT_SP,22f)
-            holder.binding.tvAwayTeamName.setTypeface(null, Typeface.BOLD)
-
-            holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_700))
+        when {
+            homeScore > awayScore -> {
+                holder.binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_600))
+                holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_1000))
+            }
+            awayScore > homeScore -> {
+                holder.binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_1000))
+                holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_600))
+            }
+            else -> {
+                holder.binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_1000))
+                holder.binding.tvScoreAwayTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_1000))
+            }
         }
+        holder.binding.tvScoreHomeTeam.text = homeScore.toString()
+        holder.binding.tvScoreAwayTeam.text = awayScore.toString()
+
         holder.binding.tvVenueName.text = "${item.venue.name} | ${item.date.formatDateToAdapter(context)}"
     }
 }

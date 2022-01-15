@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,85 +13,59 @@
 
         <TextView
             android:id="@+id/tvCompetitionName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="PREMIER LEAGUE"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            style="@style/TextView_CompetitionName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="PREMIER LEAGUE" />
 
         <TextView
             android:id="@+id/tvVenueName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Stamford Bridge | Sep 12, 2017 at 20:00"
-            android:textAllCaps="false"
-            android:textColor="@color/grey_700"
-            android:textSize="16sp"
+            style="@style/TextView_VenueName"
             app:layout_constraintStart_toStartOf="@+id/tvCompetitionName"
-            app:layout_constraintTop_toBottomOf="@+id/tvCompetitionName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCompetitionName"
+            tools:text="Stamford Bridge | Sep 12, 2017 at 20:00" />
 
         <TextView
             android:id="@+id/tvHomeTeamName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/TextView_TeamName"
             android:layout_marginTop="40dp"
-            android:text="Chelsea FC"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/tvVenueName"
-            app:layout_constraintTop_toBottomOf="@+id/tvVenueName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvVenueName"
+            tools:text="Chelsea FC" />
 
         <TextView
             android:id="@+id/tvAwayTeamName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/TextView_TeamName"
             android:layout_marginTop="25dp"
-            android:text="Everton"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/tvHomeTeamName"
-            app:layout_constraintTop_toBottomOf="@+id/tvHomeTeamName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvHomeTeamName"
+            tools:text="Everton" />
 
         <TextView
             android:id="@+id/tvScoreHomeTeam"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="2"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="24sp"
+            style="@style/TextView_TeamScore"
             app:layout_constraintBottom_toBottomOf="@+id/tvHomeTeamName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tvHomeTeamName" />
+            app:layout_constraintTop_toTopOf="@+id/tvHomeTeamName"
+            tools:text="2" />
 
         <TextView
             android:id="@+id/tvScoreAwayTeam"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="0"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="24sp"
+            style="@style/TextView_TeamScore"
             app:layout_constraintBottom_toBottomOf="@+id/tvAwayTeamName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="@+id/tvAwayTeamName" />
+            app:layout_constraintTop_toTopOf="@+id/tvAwayTeamName"
+            tools:text="0" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.7" />
+            app:layout_constraintGuide_percent="0.8" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

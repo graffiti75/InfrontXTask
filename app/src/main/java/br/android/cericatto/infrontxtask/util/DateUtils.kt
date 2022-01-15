@@ -32,6 +32,13 @@ fun String.formatDateToAdapter(): String {
     return "${a[1].formatMonth()} $monthDayString, ${a[0]} at ${d[0]}:${d[1]}"
 }
 
+fun String.weekday(context: Context): String {
+    val isoFormat = SimpleDateFormat(context.getString(R.string.iso_8601_format))
+    val dateInIso = isoFormat.parse(this)
+    val weekdayFormat = SimpleDateFormat(context.getString(R.string.weekday_format))
+    return weekdayFormat.format(dateInIso).getStringWithoutLastChar()
+}
+
 fun String.formatDateToAdapter(context: Context): String {
     val isoFormat = SimpleDateFormat(context.getString(R.string.iso_8601_format))
     val dateInIso = isoFormat.parse(this)

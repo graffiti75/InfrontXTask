@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
-import br.android.cericatto.infrontxtask.adapter.ResultsAdapter
-import br.android.cericatto.infrontxtask.data.result.ResultItem
+import br.android.cericatto.infrontxtask.adapter.FixturesAdapter
+import br.android.cericatto.infrontxtask.data.fixture.FixtureItem
 import br.android.cericatto.infrontxtask.databinding.ActivityMainBinding
 import br.android.cericatto.infrontxtask.main.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,10 +48,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    private fun setAdapter(items: List<FixtureItem>) {
-    private fun setAdapter(items: List<ResultItem>) {
-//        val itemAdapter = FixturesAdapter()
-        val itemAdapter = ResultsAdapter()
+    private fun setAdapter(items: List<FixtureItem>) {
+//    private fun setAdapter(items: List<ResultItem>) {
+        val itemAdapter = FixturesAdapter()
+//        val itemAdapter = ResultsAdapter()
         binding.recyclerView.apply {
             adapter = itemAdapter
             val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)

@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-    </data>
+    <data></data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,25 +13,17 @@
 
         <TextView
             android:id="@+id/tvCompetitionName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="CHAMPIONS LEAGUE"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            style="@style/TextView_CompetitionName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="CHAMPIONS LEAGUE" />
 
         <TextView
             android:id="@+id/tvVenueName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            tools:text="Stamford Bridge | Sep 12, 2017 at 20:00"
-            android:textAllCaps="false"
-            android:textColor="@color/grey_700"
-            android:textSize="16sp"
+            style="@style/TextView_VenueName"
             app:layout_constraintStart_toStartOf="@+id/tvCompetitionName"
-            app:layout_constraintTop_toBottomOf="@+id/tvCompetitionName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCompetitionName"
+            tools:text="Stamford Bridge | Sep 12, 2017 at 20:00" />
 
         <TextView
             android:id="@+id/tvPostponed"
@@ -43,38 +34,32 @@
             android:paddingTop="3dp"
             android:paddingEnd="7dp"
             android:paddingBottom="3dp"
-            tools:text="POSTPONED"
+            android:text="@string/postponed"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="13sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/tvCompetitionName"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tvHomeTeamName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/TextView_TeamName"
             android:layout_marginTop="40dp"
-            tools:text="Chelsea FC"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/tvVenueName"
-            app:layout_constraintTop_toBottomOf="@+id/tvVenueName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvVenueName"
+            tools:text="Chelsea FC" />
 
         <TextView
             android:id="@+id/tvAwayTeamName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            style="@style/TextView_TeamName"
             android:layout_marginTop="25dp"
-            tools:text="Qarabag"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="@+id/tvHomeTeamName"
-            app:layout_constraintTop_toBottomOf="@+id/tvHomeTeamName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvHomeTeamName"
+            tools:text="Qarabag" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -91,13 +76,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:gravity="center_horizontal"
-            tools:text="17"
             android:textAllCaps="false"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="44sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView" />
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            tools:text="17" />
 
         <TextView
             android:id="@+id/tvDayWeek"
@@ -105,14 +90,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:gravity="center_horizontal"
-            tools:text="SUN"
             android:textAllCaps="true"
             android:textColor="@color/black"
-            android:textSize="24sp"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/tvDayMonth" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDayMonth"
+            tools:text="SUN" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
