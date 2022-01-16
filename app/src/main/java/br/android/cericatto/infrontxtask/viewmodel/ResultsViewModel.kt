@@ -1,8 +1,9 @@
-package br.android.cericatto.infrontxtask.main
+package br.android.cericatto.infrontxtask.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.android.cericatto.infrontxtask.data.fixture.FixtureItem
+import br.android.cericatto.infrontxtask.data.result.ResultItem
+import br.android.cericatto.infrontxtask.repository.MainRepository
 import br.android.cericatto.infrontxtask.util.DispatcherProvider
 import br.android.cericatto.infrontxtask.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,14 +17,13 @@ import javax.inject.Inject
  * https://stackoverflow.com/questions/66185820/dagger-hilt-assisted-and-viewmodelinject-is-deprecated-in-dagger-hilt-view
  */
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class ResultsViewModel @Inject constructor(
     private val repository: MainRepository,
     private val dispatchers: DispatcherProvider
 ): ViewModel() {
 
     sealed class UIEvent {
-//        class Success(val items: List<ResultItem>): UIEvent()
-        class Success(val items: List<FixtureItem>): UIEvent()
+        class Success(val items: List<ResultItem>): UIEvent()
         class Failure(val errorText: String): UIEvent()
         object Loading : UIEvent()
         object Empty : UIEvent()
@@ -32,11 +32,10 @@ class MainViewModel @Inject constructor(
     private val _data = MutableStateFlow<UIEvent>(UIEvent.Empty)
     val data: StateFlow<UIEvent> = _data
 
-    fun getData() {
+    fun getResults() {
         viewModelScope.launch(dispatchers.io) {
             _data.value = UIEvent.Loading
-//            when(val apiResponse = repository.getResults()) {
-            when(val apiResponse = repository.getFixtures()) {
+            when(val apiResponse = repository.getResults()) {
                 is Resource.Error ->
                     _data.value = UIEvent.Failure(apiResponse.message!!)
                 is Resource.Success -> {

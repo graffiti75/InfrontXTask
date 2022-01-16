@@ -1,4 +1,4 @@
-package br.android.cericatto.infrontxtask.main
+package br.android.cericatto.infrontxtask.repository
 
 import br.android.cericatto.infrontxtask.data.Api
 import br.android.cericatto.infrontxtask.data.fixture.ApiFixture

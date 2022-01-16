@@ -1,8 +1,8 @@
 package br.android.cericatto.infrontxtask.di
 
 import br.android.cericatto.infrontxtask.data.Api
-import br.android.cericatto.infrontxtask.main.DefaultMainRepository
-import br.android.cericatto.infrontxtask.main.MainRepository
+import br.android.cericatto.infrontxtask.repository.DefaultMainRepository
+import br.android.cericatto.infrontxtask.repository.MainRepository
 import br.android.cericatto.infrontxtask.util.DispatcherProvider
 import dagger.Module
 import dagger.Provides
