@@ -2,10 +2,13 @@ package br.android.cericatto.infrontxtask.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.android.cericatto.infrontxtask.adapter.ResultsRecyclerViewItem
 import br.android.cericatto.infrontxtask.data.result.ResultItem
 import br.android.cericatto.infrontxtask.repository.MainRepository
 import br.android.cericatto.infrontxtask.util.DispatcherProvider
 import br.android.cericatto.infrontxtask.util.Resource
+import br.android.cericatto.infrontxtask.util.filterDate
+import br.android.cericatto.infrontxtask.util.toResultsRecyclerViewItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,14 +42,47 @@ class ResultsViewModel @Inject constructor(
                 is Resource.Error ->
                     _data.value = UIEvent.Failure(apiResponse.message!!)
                 is Resource.Success -> {
-                    val items = apiResponse.data
+                    val items: ArrayList<ResultItem>? = apiResponse.data
                     if (items == null) {
                         _data.value = UIEvent.Failure("Unexpected error")
                     } else {
-                        _data.value = UIEvent.Success(items)
+                        initResultsRecyclerViewItem(items)
                     }
                 }
             }
         }
+    }
+
+    private fun initResultsRecyclerViewItem(items: ArrayList<ResultItem>) {
+        // ----- Algorithm to add Headers to the List -----
+        // Variables setup.
+        val viewItemList = mutableListOf<ResultsRecyclerViewItem>()
+        val resultsList = mutableListOf<ResultItem>()
+
+        // Main loop init.
+        var latestMonthYear = items[0].date.filterDate()
+        println("----- item[0] = ${items[0]}")
+        resultsList.add(items[0])
+
+        // Main loop.
+        for (i in 1 until items.size) {
+            val item = items[i]
+            println("----- item[$i] = ${items[i]}")
+            val currentMonthYear = item.date.filterDate()
+            val lastItemReached = i == items.size - 1
+            if ((currentMonthYear != latestMonthYear) || lastItemReached) {
+                if (lastItemReached)
+                    resultsList.add(item)
+                viewItemList.add(ResultsRecyclerViewItem.MonthOfYear(latestMonthYear))
+                resultsList.forEach {
+                    viewItemList.add(it.toResultsRecyclerViewItem())
+                }
+                resultsList.clear()
+                resultsList.add(item)
+            } else
+                resultsList.add(item)
+            latestMonthYear = item.date.filterDate()
+        }
+        _data.value = UIEvent.Success(items)
     }
 }

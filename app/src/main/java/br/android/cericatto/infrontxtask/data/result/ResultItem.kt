@@ -6,13 +6,13 @@ import br.android.cericatto.infrontxtask.data.common.HomeTeam
 import br.android.cericatto.infrontxtask.data.common.Venue
 
 data class ResultItem(
-    val aggregateScore: AggregateScore,
+    val aggregateScore: AggregateScore? = AggregateScore(),
     val awayTeam: AwayTeam,
     val competitionStage: CompetitionStage,
     val date: String,
     val homeTeam: HomeTeam,
     val id: Int,
-    val penaltyScore: PenaltyScore,
+    val penaltyScore: PenaltyScore? = PenaltyScore(),
     val score: Score,
     val state: String,
     val type: String,

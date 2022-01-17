@@ -2,6 +2,14 @@ package br.android.cericatto.infrontxtask.util
 
 import android.content.Context
 import br.android.cericatto.infrontxtask.R
+import br.android.cericatto.infrontxtask.adapter.ResultsRecyclerViewItem
+import br.android.cericatto.infrontxtask.data.common.CompetitionStage
+import br.android.cericatto.infrontxtask.data.common.HomeTeam
+import br.android.cericatto.infrontxtask.data.common.Venue
+import br.android.cericatto.infrontxtask.data.result.AggregateScore
+import br.android.cericatto.infrontxtask.data.result.PenaltyScore
+import br.android.cericatto.infrontxtask.data.result.ResultItem
+import br.android.cericatto.infrontxtask.data.result.Score
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,8 +23,8 @@ fun String.weekday(context: Context): String {
 }
 
 /**
- * Input: 2019-02-02T15:00:00.000Z
- * Output: Feb 2, 2019 at 15:00
+ * Input format: 2019-02-02T15:00:00.000Z
+ * Output format: Feb 2, 2019 at 15:00
  */
 fun String.formatDateToAdapter(context: Context): String {
     val isoFormat = SimpleDateFormat(context.getString(R.string.iso_8601_format))
@@ -73,3 +81,46 @@ fun String.capitalizeString() = replaceFirstChar {
 }
 
 fun String.getStringWithoutLastChar() = this.substring(0, this.length - 1)
+
+/**
+ * Input format: 2019-02-02T15:00:00.000Z
+ */
+fun String.filterDate(): String {
+    val split = this.split("-")
+    return "${split[0]}${split[1]}"
+}
+
+/**
+ * Input format: 2019-02
+ * Output format: February 2019
+ */
+fun String.formattedMonthYear(context: Context): String {
+    /*
+    val split = this.split("-")
+    val year = split[0]
+    val month = split[1].toInt()
+     */
+    val yearMonthFormat = SimpleDateFormat(context.getString(R.string.year_month_format))
+    return yearMonthFormat.format(this)
+}
+
+fun ResultItem.toResultsRecyclerViewItem(): ResultsRecyclerViewItem.Results {
+    var aggregateScore = AggregateScore()
+    if (this.aggregateScore != null) aggregateScore = this.aggregateScore
+
+    var penaltyScore = PenaltyScore()
+    if (this.penaltyScore != null) penaltyScore = this.penaltyScore
+    return ResultsRecyclerViewItem.Results(
+        aggregateScore,
+        this.awayTeam,
+        this.competitionStage,
+        this.date,
+        this.homeTeam,
+        this.id,
+        penaltyScore,
+        this.score,
+        this.state,
+        this.type,
+        this.venue
+    )
+}
