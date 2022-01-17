@@ -26,7 +26,7 @@ class ResultsViewModel @Inject constructor(
 ): ViewModel() {
 
     sealed class UIEvent {
-        class Success(val items: List<ResultItem>): UIEvent()
+        class Success(val items: List<ResultsRecyclerViewItem>): UIEvent()
         class Failure(val errorText: String): UIEvent()
         object Loading : UIEvent()
         object Empty : UIEvent()
@@ -61,19 +61,17 @@ class ResultsViewModel @Inject constructor(
 
         // Main loop init.
         var latestMonthYear = items[0].date.filterDate()
-        println("----- item[0] = ${items[0]}")
         resultsList.add(items[0])
 
         // Main loop.
         for (i in 1 until items.size) {
             val item = items[i]
-            println("----- item[$i] = ${items[i]}")
             val currentMonthYear = item.date.filterDate()
             val lastItemReached = i == items.size - 1
             if ((currentMonthYear != latestMonthYear) || lastItemReached) {
                 if (lastItemReached)
                     resultsList.add(item)
-                viewItemList.add(ResultsRecyclerViewItem.MonthOfYear(latestMonthYear))
+                viewItemList.add(ResultsRecyclerViewItem.Title(latestMonthYear))
                 resultsList.forEach {
                     viewItemList.add(it.toResultsRecyclerViewItem())
                 }
@@ -83,6 +81,6 @@ class ResultsViewModel @Inject constructor(
                 resultsList.add(item)
             latestMonthYear = item.date.filterDate()
         }
-        _data.value = UIEvent.Success(items)
+        _data.value = UIEvent.Success(viewItemList)
     }
 }

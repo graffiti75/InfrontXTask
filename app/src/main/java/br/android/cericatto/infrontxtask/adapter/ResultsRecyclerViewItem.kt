@@ -10,11 +10,11 @@ import br.android.cericatto.infrontxtask.data.result.Score
 
 sealed class ResultsRecyclerViewItem {
 
-    class MonthOfYear(
-        val filter: String
+    class Title(
+        val title: String
     ) : ResultsRecyclerViewItem()
 
-    class Results(
+    class Result(
         val aggregateScore: AggregateScore,
         val awayTeam: AwayTeam,
         val competitionStage: CompetitionStage,

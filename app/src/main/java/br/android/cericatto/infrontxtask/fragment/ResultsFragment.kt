@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.android.cericatto.infrontxtask.R
 import br.android.cericatto.infrontxtask.adapter.ResultsAdapter
-import br.android.cericatto.infrontxtask.data.result.ResultItem
+import br.android.cericatto.infrontxtask.adapter.ResultsRecyclerViewItem
 import br.android.cericatto.infrontxtask.databinding.FragmentResultsBinding
 import br.android.cericatto.infrontxtask.viewmodel.ResultsViewModel
 import kotlinx.coroutines.flow.collect
@@ -53,7 +53,7 @@ class ResultsFragment : Fragment() {
         }
     }
 
-    private fun setAdapter(items: List<ResultItem>) {
+    private fun setAdapter(list: List<ResultsRecyclerViewItem>) {
         val itemAdapter = ResultsAdapter()
         binding.recyclerView.apply {
             adapter = itemAdapter
@@ -61,6 +61,6 @@ class ResultsFragment : Fragment() {
             dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this.context, R.drawable.decoration_divider)!!)
             addItemDecoration(dividerItemDecoration)
         }
-        itemAdapter.submitList(items)
+        itemAdapter.items = list
     }
 }

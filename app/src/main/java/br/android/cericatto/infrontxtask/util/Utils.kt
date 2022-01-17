@@ -3,13 +3,9 @@ package br.android.cericatto.infrontxtask.util
 import android.content.Context
 import br.android.cericatto.infrontxtask.R
 import br.android.cericatto.infrontxtask.adapter.ResultsRecyclerViewItem
-import br.android.cericatto.infrontxtask.data.common.CompetitionStage
-import br.android.cericatto.infrontxtask.data.common.HomeTeam
-import br.android.cericatto.infrontxtask.data.common.Venue
 import br.android.cericatto.infrontxtask.data.result.AggregateScore
 import br.android.cericatto.infrontxtask.data.result.PenaltyScore
 import br.android.cericatto.infrontxtask.data.result.ResultItem
-import br.android.cericatto.infrontxtask.data.result.Score
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -100,17 +96,26 @@ fun String.formattedMonthYear(context: Context): String {
     val year = split[0]
     val month = split[1].toInt()
      */
-    val yearMonthFormat = SimpleDateFormat(context.getString(R.string.year_month_format))
-    return yearMonthFormat.format(this)
+    val inputYearMonthFormat = SimpleDateFormat(context.getString(R.string.input_year_month_format))
+    val outputYearMonthFormat = SimpleDateFormat(context.getString(R.string.output_year_month_format))
+    val date = inputYearMonthFormat.parse(this)
+    return outputYearMonthFormat.format(date).capitalizeString()
+
+    /*
+    DateFormat originalFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.ENGLISH);
+    DateFormat targetFormat = new SimpleDateFormat("yyyyMMdd");
+    Date date = originalFormat.parse("August 21, 2012");
+    String formattedDate = targetFormat.format(date);  // 20120821
+     */
 }
 
-fun ResultItem.toResultsRecyclerViewItem(): ResultsRecyclerViewItem.Results {
+fun ResultItem.toResultsRecyclerViewItem(): ResultsRecyclerViewItem.Result {
     var aggregateScore = AggregateScore()
     if (this.aggregateScore != null) aggregateScore = this.aggregateScore
 
     var penaltyScore = PenaltyScore()
     if (this.penaltyScore != null) penaltyScore = this.penaltyScore
-    return ResultsRecyclerViewItem.Results(
+    return ResultsRecyclerViewItem.Result(
         aggregateScore,
         this.awayTeam,
         this.competitionStage,
