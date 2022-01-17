@@ -118,8 +118,6 @@ fun String.getStringWithoutLastChar() = this.substring(0, this.length - 1)
  */
 
 fun FixtureItem.toFixturesRecyclerViewItem(): FixturesRecyclerViewItem.Fixture {
-    var venue = Venue()
-    if (venue != null) venue = this.venue!!
     return FixturesRecyclerViewItem.Fixture(
         this.awayTeam,
         this.competitionStage,
@@ -127,7 +125,7 @@ fun FixtureItem.toFixturesRecyclerViewItem(): FixturesRecyclerViewItem.Fixture {
         this.homeTeam,
         this.id,
         this.state,
-        venue
+        this.venue
     )
 }
 

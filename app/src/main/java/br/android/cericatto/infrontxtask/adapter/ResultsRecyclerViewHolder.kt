@@ -15,7 +15,7 @@ sealed class ResultsRecyclerViewHolder(binding: ViewBinding) : RecyclerView.View
     class TitleViewHolder(private val binding: ItemTitleBinding) : ResultsRecyclerViewHolder(binding){
         fun bind(resultTitle: ResultsRecyclerViewItem.Title) {
             val title = resultTitle.title
-            val format = "${title.substring(0, 4)}-${title.substring(4, title.length)}"
+            val format = "${title?.substring(0, 4)}-${title?.substring(4, title?.length)}"
             val formattedTitle = format.formattedMonthYear(binding.root.context)
             binding.tvTitle.text = formattedTitle
         }
@@ -23,18 +23,18 @@ sealed class ResultsRecyclerViewHolder(binding: ViewBinding) : RecyclerView.View
 
     class ResultsViewHolder(private val binding: ItemResultBinding) : ResultsRecyclerViewHolder(binding){
         fun bind(result: ResultsRecyclerViewItem.Result) {
-            binding.tvCompetitionName.text = result.competitionStage.competition.name
+            binding.tvCompetitionName.text = result.competitionStage?.competition?.name
             binding.tvCompetitionName.setTypeface(null, Typeface.BOLD)
             setHomeAwayTeams(binding, result)
         }
 
         private fun setHomeAwayTeams(binding: ItemResultBinding, result: ResultsRecyclerViewItem.Result) {
             val context = binding.root.context
-            val homeScore = result.score.home
-            val awayScore = result.score.away
+            val homeScore = result.score?.home!!
+            val awayScore = result.score?.away!!
 
-            binding.tvHomeTeamName.text = result.homeTeam.name
-            binding.tvAwayTeamName.text = result.awayTeam.name
+            binding.tvHomeTeamName.text = result.homeTeam?.name
+            binding.tvAwayTeamName.text = result.awayTeam?.name
             when {
                 homeScore > awayScore -> {
                     binding.tvScoreHomeTeam.setTextColor(ContextCompat.getColor(context, R.color.blue_600))
@@ -52,7 +52,7 @@ sealed class ResultsRecyclerViewHolder(binding: ViewBinding) : RecyclerView.View
             binding.tvScoreHomeTeam.text = homeScore.toString()
             binding.tvScoreAwayTeam.text = awayScore.toString()
 
-            binding.tvVenueName.text = "${result.venue.name} | ${result.date.formatDateToAdapter(context)}"
+            binding.tvVenueName.text = "${result.venue?.name} | ${result.date?.formatDateToAdapter(context)}"
         }
     }
 }

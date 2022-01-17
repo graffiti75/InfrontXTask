@@ -8,15 +8,15 @@ import br.android.cericatto.infrontxtask.data.common.Venue
 sealed class FixturesRecyclerViewItem {
 
     class Title(
-        val title: String
+        val title: String? = "",
     ) : FixturesRecyclerViewItem()
 
     class Fixture(
-        val awayTeam: AwayTeam,
-        val competitionStage: CompetitionStage,
-        val date: String,
-        val homeTeam: HomeTeam,
-        val id: Int,
+        val awayTeam: AwayTeam? = AwayTeam(),
+        val competitionStage: CompetitionStage? = CompetitionStage(),
+        val date: String? = "",
+        val homeTeam: HomeTeam? = HomeTeam(),
+        val id: Int? = -1,
         val state: String? = "",
         val venue: Venue? = Venue()
     ) : FixturesRecyclerViewItem()

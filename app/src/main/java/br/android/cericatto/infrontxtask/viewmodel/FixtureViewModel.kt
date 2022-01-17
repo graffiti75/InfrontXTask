@@ -62,13 +62,13 @@ class FixtureViewModel @Inject constructor(
         val fixturesList = mutableListOf<FixtureItem>()
 
         // Main loop init.
-        var latestMonthYear = items[0].date.filterDate()
+        var latestMonthYear = items[0].date?.filterDate()
         fixturesList.add(items[0])
 
         // Main loop.
         for (i in 1 until items.size) {
             val item = items[i]
-            val currentMonthYear = item.date.filterDate()
+            val currentMonthYear = item.date?.filterDate()
             val lastItemReached = i == items.size - 1
             if ((currentMonthYear != latestMonthYear) || lastItemReached) {
                 if (lastItemReached)
@@ -81,7 +81,7 @@ class FixtureViewModel @Inject constructor(
                 fixturesList.add(item)
             } else
                 fixturesList.add(item)
-            latestMonthYear = item.date.filterDate()
+            latestMonthYear = item.date?.filterDate()
         }
         _data.value = UIEvent.Success(viewItemList)
     }

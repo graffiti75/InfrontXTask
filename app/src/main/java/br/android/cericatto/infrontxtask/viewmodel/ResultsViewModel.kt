@@ -61,13 +61,13 @@ class ResultsViewModel @Inject constructor(
         val resultsList = mutableListOf<ResultItem>()
 
         // Main loop init.
-        var latestMonthYear = items[0].date.filterDate()
+        var latestMonthYear = items[0].date?.filterDate()
         resultsList.add(items[0])
 
         // Main loop.
         for (i in 1 until items.size) {
             val item = items[i]
-            val currentMonthYear = item.date.filterDate()
+            val currentMonthYear = item.date?.filterDate()
             val lastItemReached = i == items.size - 1
             if ((currentMonthYear != latestMonthYear) || lastItemReached) {
                 if (lastItemReached)
@@ -80,7 +80,7 @@ class ResultsViewModel @Inject constructor(
                 resultsList.add(item)
             } else
                 resultsList.add(item)
-            latestMonthYear = item.date.filterDate()
+            latestMonthYear = item.date?.filterDate()
         }
         _data.value = UIEvent.Success(viewItemList)
     }

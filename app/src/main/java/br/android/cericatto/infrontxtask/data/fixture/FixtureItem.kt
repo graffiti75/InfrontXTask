@@ -6,12 +6,12 @@ import br.android.cericatto.infrontxtask.data.common.HomeTeam
 import br.android.cericatto.infrontxtask.data.common.Venue
 
 data class FixtureItem(
-    val awayTeam: AwayTeam,
-    val competitionStage: CompetitionStage,
-    val date: String,
-    val homeTeam: HomeTeam,
-    val id: Int,
+    val awayTeam: AwayTeam? = AwayTeam(),
+    val competitionStage: CompetitionStage? = CompetitionStage(),
+    val date: String? = "",
+    val homeTeam: HomeTeam? = HomeTeam(),
+    val id: Int? = -1,
     val state: String? = "",
-    val type: String,
+    val type: String? = "",
     val venue: Venue? = Venue()
 )

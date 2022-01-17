@@ -7,14 +7,14 @@ import br.android.cericatto.infrontxtask.data.common.Venue
 
 data class ResultItem(
     val aggregateScore: AggregateScore? = AggregateScore(),
-    val awayTeam: AwayTeam,
-    val competitionStage: CompetitionStage,
-    val date: String,
-    val homeTeam: HomeTeam,
-    val id: Int,
+    val awayTeam: AwayTeam? = AwayTeam(),
+    val competitionStage: CompetitionStage? = CompetitionStage(),
+    val date: String? = "",
+    val homeTeam: HomeTeam? = HomeTeam(),
+    val id: Int? = -1,
     val penaltyScore: PenaltyScore? = PenaltyScore(),
-    val score: Score,
-    val state: String,
-    val type: String,
-    val venue: Venue
+    val score: Score? = Score(),
+    val state: String? = "",
+    val type: String? = "",
+    val venue: Venue? = Venue()
 )

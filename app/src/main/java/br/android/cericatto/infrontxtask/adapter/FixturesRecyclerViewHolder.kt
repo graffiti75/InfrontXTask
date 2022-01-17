@@ -22,7 +22,7 @@ sealed class FixturesRecyclerViewHolder(binding: ViewBinding) : RecyclerView.Vie
     class TitleViewHolder(private val binding: ItemTitleBinding) : FixturesRecyclerViewHolder(binding){
         fun bind(fixtureTitle: FixturesRecyclerViewItem.Title) {
             val title = fixtureTitle.title
-            val format = "${title.substring(0, 4)}-${title.substring(4, title.length)}"
+            val format = "${title?.substring(0, 4)}-${title?.substring(4, title.length)}"
             val formattedTitle = format.formattedMonthYear(binding.root.context)
             binding.tvTitle.text = formattedTitle
         }
@@ -30,11 +30,11 @@ sealed class FixturesRecyclerViewHolder(binding: ViewBinding) : RecyclerView.Vie
 
     class FixturesViewHolder(private val binding: ItemFixtureBinding) : FixturesRecyclerViewHolder(binding){
         fun bind(fixture: FixturesRecyclerViewItem.Fixture) {
-            binding.tvCompetitionName.text = fixture.competitionStage.competition.name
+            binding.tvCompetitionName.text = fixture.competitionStage?.competition?.name
             binding.tvCompetitionName.setTypeface(null, Typeface.BOLD)
 
-            binding.tvHomeTeamName.text = fixture.homeTeam.name
-            binding.tvAwayTeamName.text = fixture.awayTeam.name
+            binding.tvHomeTeamName.text = fixture.homeTeam?.name
+            binding.tvAwayTeamName.text = fixture.awayTeam?.name
 
             if (fixture.state == binding.root.context.getString(R.string.postponed))
                 binding.tvPostponed.visibility = View.VISIBLE
@@ -46,10 +46,10 @@ sealed class FixturesRecyclerViewHolder(binding: ViewBinding) : RecyclerView.Vie
 
         private fun setDateTime(binding: ItemFixtureBinding, fixture: FixturesRecyclerViewItem.Fixture) {
             val context = binding.root.context
-            binding.tvDayMonth.text = fixture.date.dayOfMonth()
+            binding.tvDayMonth.text = fixture.date?.dayOfMonth()
 
             binding.tvVenueName.apply {
-                val string = "${fixture.venue!!.name} | ${fixture.date.formatDateToAdapter(context)}"
+                val string = "${fixture.venue!!.name} | ${fixture.date?.formatDateToAdapter(context)}"
                 val spannedString: Spannable = SpannableString(string)
                 val startIndex = fixture.venue!!.name.length + 3
                 val endIndex = string.length
@@ -63,7 +63,7 @@ sealed class FixturesRecyclerViewHolder(binding: ViewBinding) : RecyclerView.Vie
                 )
                 text = spannedString
             }
-            binding.tvDayWeek.text = fixture.date.weekday(context)
+            binding.tvDayWeek.text = fixture.date?.weekday(context)
         }
     }
 }
