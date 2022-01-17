@@ -4,21 +4,20 @@ import br.android.cericatto.infrontxtask.data.common.AwayTeam
 import br.android.cericatto.infrontxtask.data.common.CompetitionStage
 import br.android.cericatto.infrontxtask.data.common.HomeTeam
 import br.android.cericatto.infrontxtask.data.common.Venue
-import br.android.cericatto.infrontxtask.data.result.Score
 
-sealed class ResultsRecyclerViewItem {
+sealed class FixturesRecyclerViewItem {
 
     class Title(
         val title: String
-    ) : ResultsRecyclerViewItem()
+    ) : FixturesRecyclerViewItem()
 
-    class Result(
+    class Fixture(
         val awayTeam: AwayTeam,
         val competitionStage: CompetitionStage,
         val date: String,
         val homeTeam: HomeTeam,
         val id: Int,
-        val score: Score,
-        val venue: Venue
-    ) : ResultsRecyclerViewItem()
+        val state: String? = "",
+        val venue: Venue? = Venue()
+    ) : FixturesRecyclerViewItem()
 }

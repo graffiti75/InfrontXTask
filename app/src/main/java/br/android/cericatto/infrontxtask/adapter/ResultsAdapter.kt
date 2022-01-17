@@ -2,6 +2,7 @@ package br.android.cericatto.infrontxtask.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import br.android.cericatto.infrontxtask.R
 import br.android.cericatto.infrontxtask.databinding.ItemResultBinding

@@ -15,13 +15,9 @@ sealed class ResultsRecyclerViewHolder(binding: ViewBinding) : RecyclerView.View
     class TitleViewHolder(private val binding: ItemTitleBinding) : ResultsRecyclerViewHolder(binding){
         fun bind(resultTitle: ResultsRecyclerViewItem.Title) {
             val title = resultTitle.title
-            println("------------- title: $title")
             val format = "${title.substring(0, 4)}-${title.substring(4, title.length)}"
-            println("--- format: $format")
             val formattedTitle = format.formattedMonthYear(binding.root.context)
-            println("--- formattedTitle: $formattedTitle")
             binding.tvTitle.text = formattedTitle
-//            binding.tvTitle.text = format
         }
     }
 

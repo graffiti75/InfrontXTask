@@ -55,6 +55,7 @@ class ResultsViewModel @Inject constructor(
 
     private fun initResultsRecyclerViewItem(items: ArrayList<ResultItem>) {
         // ----- Algorithm to add Headers to the List -----
+
         // Variables setup.
         val viewItemList = mutableListOf<ResultsRecyclerViewItem>()
         val resultsList = mutableListOf<ResultItem>()

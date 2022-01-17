@@ -10,6 +10,5 @@ interface MainRepository {
 
     suspend fun getFixtures(): Resource<ApiFixture>
 
-//    suspend fun getResults(): Resource<ArrayList<ResultItem>>
     suspend fun getResults(): Resource<ApiResult>
 }

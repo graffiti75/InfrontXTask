@@ -1,8 +1,16 @@
 package br.android.cericatto.infrontxtask.util
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import br.android.cericatto.infrontxtask.R
+import br.android.cericatto.infrontxtask.adapter.FixturesRecyclerViewItem
 import br.android.cericatto.infrontxtask.adapter.ResultsRecyclerViewItem
+import br.android.cericatto.infrontxtask.data.common.CompetitionStage
+import br.android.cericatto.infrontxtask.data.common.HomeTeam
+import br.android.cericatto.infrontxtask.data.common.Venue
+import br.android.cericatto.infrontxtask.data.fixture.FixtureItem
 import br.android.cericatto.infrontxtask.data.result.AggregateScore
 import br.android.cericatto.infrontxtask.data.result.PenaltyScore
 import br.android.cericatto.infrontxtask.data.result.ResultItem
@@ -11,6 +19,10 @@ import java.util.*
 
 const val SUFFIX = ":00"
 
+/**
+ * =============== Dates ===============
+ */
+
 fun String.weekday(context: Context): String {
     val isoFormat = SimpleDateFormat(context.getString(R.string.iso_8601_format))
     val dateInIso = isoFormat.parse(this)
@@ -18,9 +30,9 @@ fun String.weekday(context: Context): String {
     return weekdayFormat.format(dateInIso).getStringWithoutLastChar()
 }
 
-/**
- * Input format: 2019-02-02T15:00:00.000Z
- * Output format: Feb 2, 2019 at 15:00
+/*
+ Input format: 2019-02-02T15:00:00.000Z
+ Output format: Feb 2, 2019 at 15:00
  */
 fun String.formatDateToAdapter(context: Context): String {
     val isoFormat = SimpleDateFormat(context.getString(R.string.iso_8601_format))
@@ -46,12 +58,6 @@ fun String.dayOfMonth(): String {
     return b[0].dayTwoDigits()
 }
 
-fun String.dayTwoDigits(): String {
-    val number = this.toInt()
-    if (number < 10) return "0$number"
-    return this
-}
-
 fun String.subtractDates(last: String): String {
     val a = this.split(":")
     val aHour = a[0].toInt()
@@ -72,6 +78,35 @@ fun String.subtractDates(last: String): String {
     return "${cHour.toString().dayTwoDigits()}:${cMinute.toString().dayTwoDigits()}"
 }
 
+/*
+ Input format: 2019-02-02T15:00:00.000Z
+ */
+fun String.filterDate(): String {
+    val split = this.split("-")
+    return "${split[0]}${split[1]}"
+}
+
+/*
+ Input format: 2019-02
+ Output format: February 2019
+ */
+fun String.formattedMonthYear(context: Context): String {
+    val inputYearMonthFormat = SimpleDateFormat(context.getString(R.string.input_year_month_format))
+    val outputYearMonthFormat = SimpleDateFormat(context.getString(R.string.output_year_month_format))
+    val date = inputYearMonthFormat.parse(this)
+    return outputYearMonthFormat.format(date).capitalizeString()
+}
+
+/**
+ * =============== Strings ===============
+ */
+
+fun String.dayTwoDigits(): String {
+    val number = this.toInt()
+    if (number < 10) return "0$number"
+    return this
+}
+
 fun String.capitalizeString() = replaceFirstChar {
     if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
 }
@@ -79,53 +114,56 @@ fun String.capitalizeString() = replaceFirstChar {
 fun String.getStringWithoutLastChar() = this.substring(0, this.length - 1)
 
 /**
- * Input format: 2019-02-02T15:00:00.000Z
+ * =============== RecyclerView ItemType ===============
  */
-fun String.filterDate(): String {
-    val split = this.split("-")
-    return "${split[0]}${split[1]}"
-}
 
-/**
- * Input format: 2019-02
- * Output format: February 2019
- */
-fun String.formattedMonthYear(context: Context): String {
-    /*
-    val split = this.split("-")
-    val year = split[0]
-    val month = split[1].toInt()
-     */
-    val inputYearMonthFormat = SimpleDateFormat(context.getString(R.string.input_year_month_format))
-    val outputYearMonthFormat = SimpleDateFormat(context.getString(R.string.output_year_month_format))
-    val date = inputYearMonthFormat.parse(this)
-    return outputYearMonthFormat.format(date).capitalizeString()
-
-    /*
-    DateFormat originalFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.ENGLISH);
-    DateFormat targetFormat = new SimpleDateFormat("yyyyMMdd");
-    Date date = originalFormat.parse("August 21, 2012");
-    String formattedDate = targetFormat.format(date);  // 20120821
-     */
-}
-
-fun ResultItem.toResultsRecyclerViewItem(): ResultsRecyclerViewItem.Result {
-    var aggregateScore = AggregateScore()
-    if (this.aggregateScore != null) aggregateScore = this.aggregateScore
-
-    var penaltyScore = PenaltyScore()
-    if (this.penaltyScore != null) penaltyScore = this.penaltyScore
-    return ResultsRecyclerViewItem.Result(
-        aggregateScore,
+fun FixtureItem.toFixturesRecyclerViewItem(): FixturesRecyclerViewItem.Fixture {
+    var venue = Venue()
+    if (venue != null) venue = this.venue!!
+    return FixturesRecyclerViewItem.Fixture(
         this.awayTeam,
         this.competitionStage,
         this.date,
         this.homeTeam,
         this.id,
-        penaltyScore,
-        this.score,
         this.state,
-        this.type,
+        venue
+    )
+}
+
+fun ResultItem.toResultsRecyclerViewItem(): ResultsRecyclerViewItem.Result {
+    return ResultsRecyclerViewItem.Result(
+        this.awayTeam,
+        this.competitionStage,
+        this.date,
+        this.homeTeam,
+        this.id,
+        this.score,
         this.venue
     )
+}
+
+/**
+ * =============== Connectivity ===============
+ */
+
+fun Context.isNetworkConnected(): Boolean {
+    val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (cm != null) {
+        if (Build.VERSION.SDK_INT < 23) {
+            val ni = cm.activeNetworkInfo
+            if (ni != null) {
+                return ni.isConnected && (ni.type == ConnectivityManager.TYPE_WIFI || ni.type == ConnectivityManager.TYPE_MOBILE)
+            }
+        } else {
+            val n = cm.activeNetwork
+            if (n != null) {
+                val nc = cm.getNetworkCapabilities(n)
+                return nc!!.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || nc.hasTransport(
+                    NetworkCapabilities.TRANSPORT_WIFI
+                )
+            }
+        }
+    }
+    return false
 }

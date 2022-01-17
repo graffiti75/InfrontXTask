@@ -11,7 +11,7 @@ data class FixtureItem(
     val date: String,
     val homeTeam: HomeTeam,
     val id: Int,
-    val state: String,
+    val state: String? = "",
     val type: String,
-    val venue: Venue
+    val venue: Venue? = Venue()
 )

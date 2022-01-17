@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import br.android.cericatto.infrontxtask.R
 import br.android.cericatto.infrontxtask.adapter.FixturesAdapter
-import br.android.cericatto.infrontxtask.data.fixture.FixtureItem
+import br.android.cericatto.infrontxtask.adapter.FixturesRecyclerViewItem
 import br.android.cericatto.infrontxtask.databinding.FragmentFixturesBinding
 import br.android.cericatto.infrontxtask.viewmodel.FixtureViewModel
 import kotlinx.coroutines.flow.collect
@@ -53,7 +53,7 @@ class FixturesFragment : Fragment() {
         }
     }
 
-    private fun setAdapter(items: List<FixtureItem>) {
+    private fun setAdapter(list: List<FixturesRecyclerViewItem>) {
         val itemAdapter = FixturesAdapter()
         binding.recyclerView.apply {
             adapter = itemAdapter
@@ -61,6 +61,6 @@ class FixturesFragment : Fragment() {
             dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this.context, R.drawable.decoration_divider)!!)
             addItemDecoration(dividerItemDecoration)
         }
-        itemAdapter.submitList(items)
+        itemAdapter.items = list
     }
 }
