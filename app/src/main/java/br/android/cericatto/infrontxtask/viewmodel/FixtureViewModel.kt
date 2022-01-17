@@ -1,5 +1,7 @@
 package br.android.cericatto.infrontxtask.viewmodel
 
+import android.os.Handler
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.android.cericatto.infrontxtask.adapter.FixturesRecyclerViewItem

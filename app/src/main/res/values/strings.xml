@@ -8,4 +8,10 @@
     <string name="output_year_month_format">MMMM yyyy</string>
 
     <string name="postponed">postponed</string>
+
+    <string name="here">Here</string>
+    <string name="network_down">Network down.\nClick here to try to connect again.</string>
+
+    <string name="search_hint">Filter by competition</string>
+    <string name="competition_not_found">Competition not found.</string>
 </resources>

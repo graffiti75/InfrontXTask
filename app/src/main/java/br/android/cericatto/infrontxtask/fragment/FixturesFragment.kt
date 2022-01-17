@@ -15,12 +15,15 @@ import br.android.cericatto.infrontxtask.adapter.FixturesAdapter
 import br.android.cericatto.infrontxtask.adapter.FixturesRecyclerViewItem
 import br.android.cericatto.infrontxtask.databinding.FragmentFixturesBinding
 import br.android.cericatto.infrontxtask.viewmodel.FixtureViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collect
 
 class FixturesFragment : Fragment() {
-    private lateinit var binding: FragmentFixturesBinding
 
+    private lateinit var binding: FragmentFixturesBinding
     private lateinit var viewModel: FixtureViewModel
+    private lateinit var fixturesAdapter: FixturesAdapter
+    private lateinit var fixturesRecyclerViewItemList: List<FixturesRecyclerViewItem>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFixturesBinding.inflate(inflater, container, false)
@@ -54,13 +57,38 @@ class FixturesFragment : Fragment() {
     }
 
     private fun setAdapter(list: List<FixturesRecyclerViewItem>) {
-        val itemAdapter = FixturesAdapter()
+        fixturesAdapter = FixturesAdapter()
+        fixturesRecyclerViewItemList = list
         binding.recyclerView.apply {
-            adapter = itemAdapter
+            adapter = fixturesAdapter
             val dividerItemDecoration = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
             dividerItemDecoration.setDrawable(ContextCompat.getDrawable(this.context, R.drawable.decoration_divider)!!)
             addItemDecoration(dividerItemDecoration)
         }
-        itemAdapter.items = list
+        fixturesAdapter.items = list
+    }
+
+    fun resetAdapter() {
+        fixturesAdapter.items = fixturesRecyclerViewItemList
+    }
+
+    fun performToolbarSearch(query: String) {
+        val filteredList = mutableListOf<FixturesRecyclerViewItem>()
+        fixturesRecyclerViewItemList.forEach {
+            if (it is FixturesRecyclerViewItem.Fixture) {
+                if (it.competitionStage?.competition?.name?.lowercase() == query.lowercase()) {
+                    filteredList.add(it)
+                }
+            }
+        }
+        if (filteredList.isNotEmpty()) {
+            fixturesAdapter.items = filteredList
+        } else {
+            Snackbar.make(
+                binding.root,
+                getString(R.string.competition_not_found),
+                3000
+            ).show()
+        }
     }
 }
